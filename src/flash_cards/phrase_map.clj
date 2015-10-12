@@ -1,7 +1,7 @@
 (ns flash-cards.core
   (:gen-class))
 
-(def word-map
+(def phrase-map
   ["Hallo"                                  "Hello"
    "Wie geht's?"                            "How are you?"
    "Guten morgen"                           "Good morning"
@@ -73,7 +73,7 @@
    "Welche Sprachen sprechen Sie?"          "Which languages do you speak? (Formal)"
    "Wer bist du?"                           "Who are you?"
    "Wo wohnen Sie?"                         "Where do you live? (Formal)"
-   "Woher kommst du?"                       "Where are you from"
+   "Woher kommst du?"                       "Where are you from?"
    "Aus Irland. Und Sie?"                   "From Ireland. And you? (Formal)"
    "Englisch und Deutsch"                   "English and German"
    "Mein Name ist Kunze"                    "My name is Kunze"

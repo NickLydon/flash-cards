@@ -1,7 +1,7 @@
 (ns flash-cards.core
   (:gen-class))
 
-(require 'flash-cards.word_map)
+(require 'flash-cards.phrase_map)
 
 (defn ^:private all-words [word-map]
   (->>
@@ -36,4 +36,4 @@
 
 (defn -main
   [& args]
-  (show-words word-map println read-line))
+  (show-words phrase-map println read-line))
