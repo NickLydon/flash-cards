@@ -2,6 +2,8 @@
 
 Flash cards on the command line to help the user learn the German language
 
+[![Build Status](https://travis-ci.org/NickLydon/flash-cards.svg?branch=master)](https://travis-ci.org/NickLydon/flash-cards)
+
 ## Usage
 
 lein run
