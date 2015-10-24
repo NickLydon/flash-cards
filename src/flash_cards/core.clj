@@ -3,6 +3,7 @@
 
 (require 'flash-cards.phrase_map)
 (use 'hiccup.core)
+(use 'hiccup.page)
 (use 'ring.adapter.jetty)
 (use 'ring.util.codec)
 (use 'clojure.walk)
@@ -18,19 +19,26 @@
     (partition 2)
     (map vec)))
 
-(defn make-body [k]
+(defn make-response-200 [body]
+    { :status 200
+      :headers {"Content-Type" "text/html;charset=utf-8"}
+      :body body })
+
+(defn make-body [phrase-to-translate]
   [:form {:action "make-guess"}
     [:div
-      [:div k]
+      [:div phrase-to-translate]
       [:div [:input {:type "text" :name "guess" :autocomplete "off" :autocorrect "off"}]
       [:div [:a {:href "/"} "Start again"]]]]])
 
 (defn restart-guessing [current-word-map score create-word-map]
   (do (reset! score 0)
-      (let [[k v] (first (reset! current-word-map (create-word-map)))]
-          {:status 200
-           :headers {"Content-Type" "text/html"}
-           :body (html (make-body k))})))
+    (let [[k v] (first (reset! current-word-map (create-word-map)))]
+      (make-response-200
+        (html5
+          [:head]
+          [:body
+            (make-body k)])))))
 
 (defn make-handler [create-word-map]
   (let [current-word-map (atom (create-word-map))
@@ -48,16 +56,16 @@
             (do
               (swap! current-word-map #(subvec %1 1))
               (swap! score (if correct inc dec))
-              {:status 200
-               :headers {"Content-Type" "text/html"}
-               :body
-                  (html
-                    [:div
-                      [:div (str "Score: " @score)]
-                      [:div (if correct "Correct!" (str "Correct answer is: " v))]
-                      (if k
-                          (make-body k)
-                          [:a {:href "/"} "Start again"]) ])})))
+              (make-response-200
+                  (html5
+                    [:head]
+                    [:body
+                      [:div
+                        [:div (str "Score: " @score)]
+                        [:div (if correct "Correct!" (str "Correct answer is: " v))]
+                        (if k
+                            (make-body k)
+                            [:a {:href "/"} "Start again"]) ]])))))
 
         (restart-guessing current-word-map score create-word-map)))))
 
