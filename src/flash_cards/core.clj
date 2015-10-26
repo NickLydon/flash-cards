@@ -15,8 +15,7 @@
             (->>
               word-map
               (partition 2)
-              (map reverse)
-              flatten))
+              (mapcat reverse)))
     (partition 2)
     (map vec)))
 
@@ -34,7 +33,7 @@
 
 (defn restart-guessing [current-word-map score create-word-map]
   (do (reset! score 0)
-    (let [[k v] (first (reset! current-word-map (create-word-map)))]
+    (let [[[k]] (first (reset! current-word-map (create-word-map)))]
       (make-response-200
         (html5
           [:head]
@@ -50,17 +49,18 @@
         (if (empty? @current-word-map)
           (restart-guessing current-word-map score create-word-map)
 
-          (let [[_ translation]    (first @current-word-map)
-                [phrase-to-translate _]    (second @current-word-map)
+          (let [[_ translations]    (first @current-word-map)
+                [[phrase-to-translate] _]    (second @current-word-map)
                 guess    (:guess (keywordize-keys (form-decode (:query-string request))))
-                mark     (jaro-winkler guess translation)
-                correct? (= mark 1.0)]
+                marks    (map (partial jaro-winkler guess) translations)
+                correct? (some (partial = 1.0) marks)
+                close?   (some (partial < 0.9) marks)]
             (do
               (swap! current-word-map #(subvec %1 1))
               (swap! score
                      (cond correct?
                             inc
-                           (> mark 0.9)
+                           close?
                             identity
                            :else
                             dec))
@@ -70,7 +70,7 @@
                     [:body
                       [:div
                         [:div (str "Score: " @score)]
-                        [:div (if correct? "Correct!" (str "Correct answer is: " translation))]
+                        [:div (if correct? "Correct!" (str "Correct answers include: " (clojure.string/join ", " translations)))]
                         (if phrase-to-translate
                             (make-body phrase-to-translate)
                             [:a {:href "/"} "Start again"]) ]])))))

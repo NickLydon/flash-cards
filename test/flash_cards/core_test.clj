@@ -6,7 +6,7 @@
 
 (def german "Wie geht's?")
 (def english "How are you?")
-(def input [german english])
+(def input [[german] [english]])
 (def request-handler (make-handler (constantly [input])))
 (defn long-string [& strings] (clojure.string/join "" strings))
 
