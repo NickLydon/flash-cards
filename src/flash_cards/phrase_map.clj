@@ -1,87 +1,86 @@
-(ns flash-cards.core
+(ns flash-cards.phrase-map
   (:gen-class))
 
+(defrecord Phrase [german english tags])
+
 (def phrase-map
-  (->>
-    [["Hallo" "Hi" "Hey"]                     ["Hello" "Hi" "Hey"]
-     "Wie geht's?"                            ["How are you?" "How's it going?"]
-     "Guten Morgen"                           "Good morning"
-     "Guten Tag"                              "Good day"
-     "Guten Abend"                            "Good evening"
-     "Gute Nacht"                             "Good night"
-     "Auf Wiedersehen"                        "Goodbye"
-     "Tschüss"                                "Bye"
-     "Bis bald"                               "See you soon"
-     "Bis morgen"                             "See you tomorrow"
-     "Frankreich"                             "France"
-     "Deutschland"                            "Germany"
-     "Russland"                               "Russia"
-     "England"                                "England"
-     "Schottland"                             "Scotland"
-     "Wales"                                  "Wales"
-     "Irland"                                 "Ireland"
-     "Polen"                                  "Poland"
-     "Spanien"                                "Spain"
-     "Japan"                                  "Japan"
-     "China"                                  "China"
-     "Amerika"                                "America"
-     "Türkei"                                 "Turkey"
-     "Italien"                                "Italy"
-     "Großbritannien"                         "Great Britain"
-     "Amerikaner"                             "American (M)"
-     "Deutscher"                              "German (M)"
-     "Engländer"                              "English (M)"
-     "Italiener"                              "Italian (M)"
-     "Japaner"                                "Japanese (M)"
-     "Waliser"                                "Welsh (M)"
-     "Spanier"                                "Spanish (M)"
-     "Franzose"                               "French (M)"
-     "Chinese"                                "Chinese (M)"
-     "Brite"                                  "British (M)"
-     "Pole"                                   "Polish (M)"
-     "Russe"                                  "Russian (M)"
-     "Schotte"                                "Scottish (M)"
-     "Türke"                                  "Turkish (M)"
-     "Amerikanerin"                           "American (F)"
-     "Deutsche"                               "German (F)"
-     "Engländerin"                            "English (F)"
-     "Italienerin"                            "Italian (F)"
-     "Japanerin"                              "Japenese (F)"
-     "Waliserin"                              "Welsh (F)"
-     "Spanierin"                              "Spanish (F)"
-     "Französin"                              "French (F)"
-     "Chinesin"                               "Chinese (F)"
-     "Britin"                                 "British (F)"
-     "Polin"                                  "Polish (F)"
-     "Russin"                                 "Russian (F)"
-     "Schottin"                               "Scottish (F)"
-     "Türkin"                                 "Turkish (F)"
-     "Englisch"                               "English"
-     "Deutsch"                                "German"
-     "Italienisch"                            "Italian"
-     "Japanisch"                              "Japenese"
-     "Walisich"                               "Welsh"
-     "Spanisch"                               "Spanish"
-     "Französisch"                            "French"
-     "Chinesisch"                             "Chinese"
-     "Polnisch"                               "Polish"
-     "Russisch"                               "Russian"
-     "Gälisch"                                "Gaelic"
-     "Türkisch"                               "Turkish"
-     ["Wie heißen Sie?" "Wie heißt du?"]      "What's your name?"
-     ["Welche Sprachen sprechen Sie?" "Welche Sprachen sprichst du?"]"Which languages do you speak?"
-     ["Wer bist du?" "Wer sind Sie?"]         "Who are you?"
-     ["Wo wohnen Sie?" "Wo wohnst du?"]       "Where do you live?"
-     ["Woher kommst du?" "Woher kommen Sie?"] "Where are you from?"
-     ["Aus Irland. Und Sie?" "Aus Irland. Und du?"] "From Ireland. And you?"
-     "Englisch und Deutsch"                   "English and German"
-     "Mein Name ist Kunze"                    "My name is Kunze"
-     ["Aus Brasilien. Und du?" "Aus Brasilien. Und Sie?"] "From Brazil. And you?"
-     ["In Stuttgart. Und Sie?" "In Stuttgart. Und du?"] "In Stuttgart. And you?"
-     ["In Berlin. Und du?" "In Berlin. Und Sie?"] "In Berlin. And you?"
-     "Ich bin Emma Reiter"                    "I am Emma Reiter"
-     ["Und wer sind Sie?" "Und wer bist du?"] "And who are you?"
-     "Ich wohne in Salzburg"                  "I live in Salzburg"
-     "Ich bin Peter"                          "I am Peter"]
-     (map (fn [v] (if (vector? v) v [v])))
-     vec))
+   [(Phrase. ["Hallo" "Hi" "Hey"]["Hello" "Hi" "Hey"] [])
+    (Phrase. ["Wie geht's?"]["How are you?" "How's it going?"] [])
+    (Phrase. ["Guten Morgen"]["Good morning"] [])
+    (Phrase. ["Guten Tag"]["Good day"] [])
+    (Phrase. ["Guten Abend"]["Good evening"] [])
+    (Phrase. ["Gute Nacht"]["Good night"] [])
+    (Phrase. ["Auf Wiedersehen"]["Goodbye"] [])
+    (Phrase. ["Tschüss"]["Bye"] [])
+    (Phrase. ["Bis bald"]["See you soon"] [])
+    (Phrase. ["Bis morgen"]["See you tomorrow"] [])
+    (Phrase. ["Frankreich"]["France"] [])
+    (Phrase. ["Deutschland"]["Germany"] [])
+    (Phrase. ["Russland"]["Russia"] [])
+    (Phrase. ["England"]["England"] [])
+    (Phrase. ["Schottland"]["Scotland"] [])
+    (Phrase. ["Wales"]["Wales"] [])
+    (Phrase. ["Irland"]["Ireland"] [])
+    (Phrase. ["Polen"]["Poland"] [])
+    (Phrase. ["Spanien"]["Spain"] [])
+    (Phrase. ["Japan"]["Japan"] [])
+    (Phrase. ["China"]["China"] [])
+    (Phrase. ["Amerika"]["America"] [])
+    (Phrase. ["Türkei"]["Turkey"] [])
+    (Phrase. ["Italien"]["Italy"] [])
+    (Phrase. ["Großbritannien"]["Great Britain"] [])
+    (Phrase. ["Amerikaner"]["American (M)"] [])
+    (Phrase. ["Deutscher"]["German (M)"] [])
+    (Phrase. ["Engländer"]["English (M)"] [])
+    (Phrase. ["Italiener"]["Italian (M)"] [])
+    (Phrase. ["Japaner"]["Japanese (M)"] [])
+    (Phrase. ["Waliser"]["Welsh (M)"] [])
+    (Phrase. ["Spanier"]["Spanish (M)"] [])
+    (Phrase. ["Franzose"]["French (M)"] [])
+    (Phrase. ["Chinese"]["Chinese (M)"] [])
+    (Phrase. ["Brite"]["British (M)"] [])
+    (Phrase. ["Pole"]["Polish (M)"] [])
+    (Phrase. ["Russe"]["Russian (M)"] [])
+    (Phrase. ["Schotte"]["Scottish (M)"] [])
+    (Phrase. ["Türke"]["Turkish (M)"] [])
+    (Phrase. ["Amerikanerin"]["American (F)"] [])
+    (Phrase. ["Deutsche"]["German (F)"] [])
+    (Phrase. ["Engländerin"]["English (F)"] [])
+    (Phrase. ["Italienerin"]["Italian (F)"] [])
+    (Phrase. ["Japanerin"]["Japenese (F)"] [])
+    (Phrase. ["Waliserin"]["Welsh (F)"] [])
+    (Phrase. ["Spanierin"]["Spanish (F)"] [])
+    (Phrase. ["Französin"]["French (F)"] [])
+    (Phrase. ["Chinesin"]["Chinese (F)"] [])
+    (Phrase. ["Britin"]["British (F)"] [])
+    (Phrase. ["Polin"]["Polish (F)"] [])
+    (Phrase. ["Russin"]["Russian (F)"] [])
+    (Phrase. ["Schottin"]["Scottish (F)"] [])
+    (Phrase. ["Türkin"]["Turkish (F)"] [])
+    (Phrase. ["Englisch"]["English"] [])
+    (Phrase. ["Deutsch"]["German"] [])
+    (Phrase. ["Italienisch"]["Italian"] [])
+    (Phrase. ["Japanisch"]["Japenese"] [])
+    (Phrase. ["Walisich"]["Welsh"] [])
+    (Phrase. ["Spanisch"]["Spanish"] [])
+    (Phrase. ["Französisch"]["French"] [])
+    (Phrase. ["Chinesisch"]["Chinese"] [])
+    (Phrase. ["Polnisch"]["Polish"] [])
+    (Phrase. ["Russisch"]["Russian"] [])
+    (Phrase. ["Gälisch"]["Gaelic"] [])
+    (Phrase. ["Türkisch"]["Turkish"] [])
+    (Phrase. ["Wie heißen Sie?" "Wie heißt du?"]["What's your name?"] [])
+    (Phrase. ["Welche Sprachen sprechen Sie?" "Welche Sprachen sprichst du?"]["Which languages do you speak?"] [])
+    (Phrase. ["Wer bist du?" "Wer sind Sie?"]["Who are you?"] [])
+    (Phrase. ["Wo wohnen Sie?" "Wo wohnst du?"]["Where do you live?"] [])
+    (Phrase. ["Woher kommst du?" "Woher kommen Sie?"]["Where are you from?"] [])
+    (Phrase. ["Aus Irland. Und Sie?" "Aus Irland. Und du?"]["From Ireland. And you?"] [])
+    (Phrase. ["Englisch und Deutsch"]["English and German"] [])
+    (Phrase. ["Mein Name ist Kunze"]["My name is Kunze"] [])
+    (Phrase. ["Aus Brasilien. Und du?" "Aus Brasilien. Und Sie?"]["From Brazil. And you?"] [])
+    (Phrase. ["In Stuttgart. Und Sie?" "In Stuttgart. Und du?"]["In Stuttgart. And you?"] [])
+    (Phrase. ["In Berlin. Und du?" "In Berlin. Und Sie?"]["In Berlin. And you?"] [])
+    (Phrase. ["Ich bin Emma Reiter"]["I am Emma Reiter"] [])
+    (Phrase. ["Und wer sind Sie?" "Und wer bist du?"]["And who are you?"] [])
+    (Phrase. ["Ich wohne in Salzburg"]["I live in Salzburg"] [])
+    (Phrase. ["Ich bin Peter"]["I am Peter"] [])])
