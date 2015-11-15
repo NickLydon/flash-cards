@@ -15,7 +15,7 @@
           (str (apply long-string fst) (long-string strings))
           (str fst (long-string strings)))
       ""))
-(def all-tags ["countries" "languages" "nationalities" "partings" "greetings"])
+(def all-tags ["family" "objects" "furniture" "countries" "languages" "nationalities" "partings" "greetings"])
 
 (fact "should show form with phrase to be translated and input element to write answer"
     (let [response (request-handler {:uri ""})
