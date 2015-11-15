@@ -9,8 +9,6 @@
 (use 'clojure.walk)
 (use 'clj-fuzzy.jaro-winkler)
 
-(def ^:private score (atom 0))
-
 (defn rand-index [coll] (rand-int (count coll)))
 
 (defn make-response-200 [body]
@@ -52,7 +50,7 @@
       (get-new-phrase current-word-map))))
 
 (defn restart-guessing
-  ([current-word-map tag]
+  ([current-word-map tag score]
    (do (reset! score 0)
       (make-response-200
         (html5
@@ -62,12 +60,12 @@
 
 (defmacro log-sym [sym] `(println ~(str (second `(name ~sym))) ~sym))
 
-(defn make-handler [current-word-map]
+(defn make-handler [current-word-map score]
   (fn [request]
     (let [query-string (keywordize-keys (form-decode (or (:query-string request) "")))
           tag (:tag query-string)]
       (if (not (.contains (request :uri) "make-guess"))
-          (restart-guessing current-word-map tag)
+          (restart-guessing current-word-map tag score)
 
           (let [guess (:guess query-string)
                 id (:id query-string)
@@ -98,5 +96,5 @@
 
 (defn -main
   [& args]
-  (run-jetty (make-handler (to-dict phrase-map))
+  (run-jetty (make-handler (to-dict phrase-map) (atom 0))
              {:port 4000}))

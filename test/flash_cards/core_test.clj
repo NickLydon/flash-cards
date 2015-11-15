@@ -7,7 +7,8 @@
 (def german "Wie geht's?")
 (def english "How are you?")
 (def input {:german [german] :english [english]})
-(def request-handler (make-handler {1 input}))
+(def score (atom 0))
+(def request-handler (make-handler {1 input} score))
 (defn long-string [fst & strings]
   (if fst
       (if (coll? fst)
