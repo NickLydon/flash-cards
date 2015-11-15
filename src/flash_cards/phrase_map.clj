@@ -9,9 +9,10 @@
   [& rst]
   `(do
      ~@(for [sym rst]
-         (do
-           (swap! all-tags (partial cons (str sym)))
-           `(def ~(second `(name ~sym)) ~(str sym))))))
+         (let [as-string (str sym)]
+           (do
+             (swap! all-tags (partial cons as-string))
+             `(def ~(symbol (name sym)) ~as-string))))))
 
 (deftag greetings partings nationalities languages countries)
 
