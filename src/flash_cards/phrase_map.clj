@@ -4,16 +4,16 @@
 (defrecord Phrase [german english tags])
 
 (def all-tags (atom '()))
-(defmacro deftag [sym]
-  (do
-    (swap! all-tags (partial cons (str sym)))
-    `(def ~(second `(name ~sym)) ~(str sym))))
 
-(deftag greetings)
-(deftag partings)
-(deftag nationalities)
-(deftag languages)
-(deftag countries)
+(defmacro deftag
+  [& rst]
+  `(do
+     ~@(for [sym rst]
+         (do
+           (swap! all-tags (partial cons (str sym)))
+           `(def ~(second `(name ~sym)) ~(str sym))))))
+
+(deftag greetings partings nationalities languages countries)
 
 (def phrase-map
    [(Phrase. ["Hallo" "Hi" "Hey"] ["Hello" "Hi" "Hey"] [greetings])
